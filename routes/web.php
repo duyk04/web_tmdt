@@ -36,10 +36,15 @@ Route::middleware(['auth', 'customer'])->group(function () {
     // Các route khác dành cho customer
 });
 
-Route::get('/customer/cart', [CartController::class, 'cart'])->name('customer.cart');
-Route::get('/customer/add-to-cart/{id}', [CartController::class, 'addToCart'])->name('customer.add.to.cart');
-Route::post('/customer/update-cart', [CartController::class, 'updateCart'])->name('customer.update.cart');
-Route::get('/customer/remove-from-cart/{id}', [CartController::class, 'removeFromCart'])->name('customer.cart.remove');
+// Route::get('/customer/cart', [CartController::class, 'cart'])->name('customer.cart');
+// Route::get('/customer/add-to-cart/{id}', [CartController::class, 'addToCart'])->name('customer.add.to.cart');
+// Route::post('/customer/update-cart', [CartController::class, 'updateCart'])->name('customer.update.cart');
+// Route::get('/customer/remove-from-cart/{id}', [CartController::class, 'removeFromCart'])->name('customer.cart.remove');
+Route::post('/cart/add/{id}', [CartController::class, 'addToCart'])->name('customer.add.to.cart');
+Route::get('/cart', [CartController::class, 'cart'])->name('customer.cart');
+Route::post('/cart/update', [CartController::class, 'updateCart'])->name('customer.update.cart');
+Route::get('/cart/remove/{id}', [CartController::class, 'removeFromCart'])->name('customer.cart.remove');
+
 
 
 
