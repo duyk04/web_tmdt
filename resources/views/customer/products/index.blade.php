@@ -21,12 +21,16 @@
     @foreach ($products as $product)
     <div class="col-md-2 text-center card card_products">
         <div class="img-product">
-            <img src="{{ asset('storage/' . $product->image) }}" alt="Ảnh sản phẩm" class="w-100" >
+            <img src="{{ asset('storage/' . $product->image) }}" alt="Ảnh sản phẩm" class="w-100">
         </div>
         <div>
-            <p class="pt-5 name_products">{{ $product->name }}</p><br/>
+            <p class="pt-5 name_products">{{ $product->name }}</p><br />
             <p class="pt-0 mt-0">{{ $product->price }} VNĐ</p>
-            <a href="{{ route('customer.add.to.cart', $product->id) }}"> <button class="btn btn-primary">Thêm vào giỏ hàng</button></a>
+            <!-- <a href="{{ route('customer.add.to.cart', $product->id) }}"> <button class="btn btn-primary">Thêm vào giỏ hàng</button></a> -->
+            <form action="{{ route('customer.add.to.cart', ['id' => $product->id]) }}" method="POST">
+                @csrf
+                <button type="submit" class="btn btn-primary">Thêm vào giỏ hàng</button>
+            </form>
         </div>
     </div>
     @endforeach

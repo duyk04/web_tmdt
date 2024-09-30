@@ -63,7 +63,7 @@
                         {{ number_format($cartItems->sum(function ($item) { return $item->product->price * $item->quantity; }), 0, ',', '.') }} VNĐ
                     </strong>
                 </h5>
-                <a href="#" class="btn btn-primary btn-block mt-2">Thanh toán</a>
+                <a href="{{ route('customer.checkout.index') }}" class="btn btn-primary btn-block mt-2">Thanh toán</a>
             </div>
         </div>
     </div>

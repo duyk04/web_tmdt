@@ -8,6 +8,7 @@ use App\Http\Controllers\ManufacturerController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CustomerController;
 
 Route::get('/', function () {
@@ -20,7 +21,7 @@ Route::get('/', function () {
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
-    
+
     Route::get('/admin/products', [AdminController::class, 'productsIndex'])->name('admin.products.index');
     Route::get('/admin/products/create', [AdminController::class, 'productsCreate'])->name('admin.products.create');
     Route::post('/admin/products', [AdminController::class, 'productsStore'])->name('admin.products.store');
@@ -34,16 +35,19 @@ Route::middleware(['auth', 'customer'])->group(function () {
     Route::get('/customer', [CustomerController::class, 'index'])->name('customer.dashboard');
     Route::get('/customer/products', [ProductController::class, 'index'])->name('customer.products.index');
     // Các route khác dành cho customer
+
+    Route::post('/cart/add/{id}', [CartController::class, 'addToCart'])->name('customer.add.to.cart');
+    Route::get('/cart', [CartController::class, 'cart'])->name('customer.cart');
+    Route::post('/cart/update', [CartController::class, 'updateCart'])->name('customer.update.cart');
+    Route::get('/cart/remove/{id}', [CartController::class, 'removeFromCart'])->name('customer.cart.remove');
+
+    Route::get('/checkout', [CheckoutController::class, 'showCheckout'])->name('customer.checkout.index');
+    Route::post('/checkout', [CheckoutController::class, 'processCheckout'])->name('customer.checkout.process');
+    Route::get('/checkout/success', [CheckoutController::class, 'checkoutSuccess'])->name('customer.checkout.success');
 });
 
-// Route::get('/customer/cart', [CartController::class, 'cart'])->name('customer.cart');
-// Route::get('/customer/add-to-cart/{id}', [CartController::class, 'addToCart'])->name('customer.add.to.cart');
-// Route::post('/customer/update-cart', [CartController::class, 'updateCart'])->name('customer.update.cart');
-// Route::get('/customer/remove-from-cart/{id}', [CartController::class, 'removeFromCart'])->name('customer.cart.remove');
-Route::post('/cart/add/{id}', [CartController::class, 'addToCart'])->name('customer.add.to.cart');
-Route::get('/cart', [CartController::class, 'cart'])->name('customer.cart');
-Route::post('/cart/update', [CartController::class, 'updateCart'])->name('customer.update.cart');
-Route::get('/cart/remove/{id}', [CartController::class, 'removeFromCart'])->name('customer.cart.remove');
+
+
 
 
 
@@ -61,8 +65,3 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-
-
-
-
- 
